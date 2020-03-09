@@ -1,0 +1,14 @@
+:root {
+    //Colors
+    --color_blue: rgba(0, 176, 255, 1);
+    --color_grey: #8c8c8c;
+    //Margins
+    --margin-big: calc(15px + 3.18vw); // 50px
+    --margin-medium: calc(15px + 2.27vw); // 40px
+    --margin-medium-small: calc(15px + 1.36vw); // 30px
+    --margin-small: 15px; // 15px
+    //transition
+    --transi_500: all ease 500ms;
+    --transi_700: all ease 700ms;
+    --transi_900: all ease 900ms;
+}

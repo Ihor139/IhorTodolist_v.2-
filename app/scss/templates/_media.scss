@@ -1,0 +1,58 @@
+@media only screen and (max-width: 1200px) {
+    body,
+    html {
+        font-size: 15px !important;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    body,
+    html {
+        font-size: 14px !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    body,
+    html {
+        font-size: 13px !important;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    body,
+    html {
+        font-size: 12px !important;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    body,
+    html {
+        font-size: 11px !important;
+    }
+}
+
+
+/*-----------style/*-----------*/
+
+@media (min-width: 576px) and (max-width: 767.98px) {}
+
+@media (min-width: 768px) and (max-width: 991.98px) {}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {}
+
+@media (max-width: 1440px) {}
+
+@media (max-width: 1024px) {}
+
+@media (max-width: 900px) {
+}
+
+@media (max-width: 850px) {
+}
+
+@media (max-width: 575.98px) {
+}
+
+@media (max-width: 425px) {}
