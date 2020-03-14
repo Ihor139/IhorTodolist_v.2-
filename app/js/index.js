@@ -1,15 +1,24 @@
-
 class Todolist {
     constructor() {
         this.input = document.querySelector('.title_inp');
         this.inputDescr = document.querySelector('.description_inp');
+
+        this.inputDate = document.querySelector('#date');
+
+
         this.btnAdd = document.querySelector('.add');
-        this.btntabUndone = document.querySelector('.undone');
-        this.btntabDone = document.querySelector('.done');
-        this.tabUndone = document.querySelector('.section_undone');
-        this.tabDone = document.querySelector('.section_done');
+
+        this.sectRemTabs = document.querySelector('.section_remove__tabs');
+        this.btnNotComplete = document.querySelector('#uncomplete');
+        this.btnComplete = document.querySelector('#complete');
+
+        this.sectionUndone = document.querySelector('.section_undone');
+        this.sectionDone = document.querySelector('.section_done');
 
         this.btnAdd.onclick = () => this.addTask();
+        this.btnNotComplete.onclick = () => this.changeTabNotComplete();
+        this.btnComplete.onclick = () => this.changeTabComplete();
+
     }
 
     createNewItem() {
@@ -20,7 +29,7 @@ class Todolist {
         check.className = "checked";
         check.innerHTML = '<i class="fas fa-check-double"></i>';
         check.onclick = () => this.checkedTask(newTask);
-        
+
         let uncheck = document.createElement('button');
         uncheck.className = "unchecked";
         uncheck.innerHTML = '<i class="fas fa-times"></i>';
@@ -54,11 +63,19 @@ class Todolist {
 
         let newTaskTitle = document.createElement('h2');
         newTaskTitle.className = "title_task";
-        newTaskTitle.innerHTML = (this.input.value)
+        newTaskTitle.innerHTML = (this.input.value);
+
+        let newDate = document.createElement('input') 
+            newDate.className = 'newDate';
+            newDate.type = 'date';
+            newDate.value = (this.inputDate).value; 
+           
+ 
 
         let taskTitleChecked = document.createElement('div');
         taskTitleChecked.className = "task_title_cheked";
         taskTitleChecked.appendChild(newTaskTitle);
+        taskTitleChecked.appendChild(newDate); 
         taskTitleChecked.appendChild(btnsRemCheckEdit);
 
         let p = document.createElement('p');
@@ -72,16 +89,24 @@ class Todolist {
         newTask.appendChild(taskTitleChecked);
         newTask.appendChild(taskDescription);
 
-        this.tabUndone.appendChild(newTask);
+        this.sectionUndone.appendChild(newTask);
+    }
 
+    createTabExpired() {
+        let expiredTab = document.createElement('div');
+        expiredTab.classList.add('section_expired');
     }
 
     addTask() {
+        this.sectionUndone.classList.add('active');
+        this.sectionDone.classList.remove('active');
         if (this.input.value && this.inputDescr.value) {
             this.createNewItem();
             this.input.value = '';
             this.inputDescr.value = '';
         }
+        this.checkDate();
+
     }
 
     removeTask(newTask) {
@@ -99,12 +124,16 @@ class Todolist {
 
         if (classChange) {
             titleTask.setAttribute('contenteditable', 'false');
+            titleTask.classList.remove('check1');
             descripTask.setAttribute('contenteditable', 'false');
+            descripTask.classList.remove('check1');
             btnEdit.removeAttribute('hidden', '');
             btnSave.setAttribute('hidden', '');
         } else {
             titleTask.setAttribute('contenteditable', '');
+            titleTask.classList.add('check1');
             descripTask.setAttribute('contenteditable', '');
+            descripTask.classList.add('check1');
             btnEdit.setAttribute('hidden', '');
             btnSave.removeAttribute('hidden', '');
         }
@@ -118,20 +147,47 @@ class Todolist {
         let checkBtn = newTask.querySelector('.checked');
         let uncheckBtn = newTask.querySelector('.unchecked');
 
-        if(!checkTask){
+        if (!checkTask) {
             checkBtn.setAttribute('hidden', 'hidden');
             uncheckBtn.removeAttribute('hidden', 'hidden');
             newTask.parentNode.removeChild(newTask);
-            this.tabDone.appendChild(newTask);
+            this.sectionDone.appendChild(newTask);
 
-        } else{
+        } else {
             checkBtn.removeAttribute('hidden', 'hidden');
             uncheckBtn.setAttribute('hidden', 'hidden');
-            this.tabDone.removeChild(newTask);
-            this.tabUndone.appendChild(newTask);
-            
+            this.sectionDone.removeChild(newTask);
+            this.sectionUndone.appendChild(newTask);
+
         }
         newTask.classList.toggle('checked_task');
+    }
+
+    checkDate(newTask) {
+        let currentD = new Date();
+        console.log(currentD);
+        // let inputDateClone = newTask.querySelector('#create_inp_date');
+        // if (currentD < inputDateClone) {
+        //     console.log('askjfoanfas')
+        // }
+        // console.log(inputDateClone);
+    }
+
+    changeTabNotComplete() {
+        if (this.btnNotComplete.onclick) {
+            console.log('sectionUNdone');
+            this.sectionDone.classList.remove('active');
+            this.sectionUndone.classList.add('active');
+        }
+    }
+
+    changeTabComplete() {
+        if (this.btnComplete.onclick) {
+            console.log('sectionDone');
+            this.sectionUndone.classList.remove('active');
+            this.sectionDone.classList.add('active');
+
+        }
     }
 }
 

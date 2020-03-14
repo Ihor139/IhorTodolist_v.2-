@@ -20,6 +20,7 @@
             <input type="text" placeholder="Name your task" class="title_inp">
             <input type="text" placeholder="Description task" class="description_inp">
             <div class="new_task_button">
+              <input type="date" name="date" id="date">
               <input type="button" value="Add" class="add">
             </div>
           </div>
@@ -29,11 +30,14 @@
         </div>
       </div>
       <div class="section_remove">
-        <div class="section_undone"> 
-          <h2>Not completed</h2>
+        <div class="section_remove_button">
+          <input id="uncomplete" type="button" value="Not completed">
+          <input id="complete" type="button" value="Сompleted">
+          <input id="expired" type="button" value="Expired">
         </div>
-        <div class="section_done">
-          <h2>Сompleted</h2>
+        <div class="section_remove__tabs">
+          <div class="section_undone"></div>
+          <div class="section_done"></div>
         </div>
       </div>
     </div>

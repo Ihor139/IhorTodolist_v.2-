@@ -66,8 +66,24 @@
   margin: 15px 0;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  #date {
+    padding: 0 10px;
+    font-family: "Raleway Bold", sans-serif;
+    text-transform: uppercase;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #000;
+    transition: all ease-in 0.4s;
+  }
+  #data:hover {
+    cursor: pointer;
+    color: #fff !important;
+    background-color: blueviolet !important;
+  }
 }
+
 .add {
   font-family: "Raleway Bold", sans-serif;
   text-transform: uppercase;
@@ -85,9 +101,18 @@
 .section_remove {
   flex: 1 1 60%;
   display: flex;
-  flex-direction: unset;
-  justify-content: center;
+  // justify-content: center;
   align-items: unset;
+}
+.section_remove_button {
+  display: flex;
+  justify-content: space-around;
+  input {
+    background-color: #364811;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #000;
+  }
 }
 .section_remove__tabs {
   display: flex;
@@ -95,12 +120,6 @@
   width: 100%;
   margin: 15px 5px;
   color: white;
-  a {
-    background-color: #364811;
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #000;
-  }
 }
 .section_undone,
 .section_done {
@@ -117,9 +136,18 @@
     align-self: center;
   }
 }
-// .section_done{
-//   display: none;
-// }
+
+.section_done,
+.section_undone {
+  display: none;
+}
+
+.section_done.active {
+  display: flex;
+}
+.section_undone.active {
+  display: flex;
+}
 .task {
   display: flex;
   flex-direction: column;
@@ -135,10 +163,28 @@
   margin: 10px 0;
 }
 
+.newDate{
+  font-family: "Raleway Bold", sans-serif;
+  text-transform: uppercase;
+  border-radius: 20px;
+  padding: 3px 20px;
+  background-color: rgba($color: #fff, $alpha: 0.55);
+  color: #000;
+  transition: all ease-in 0.4s;
+
+}
+
 .title_task {
   flex: 1 1 calc(50% - 10px);
   padding: 5px;
 }
+
+.task_title_cheked{
+  color: green($color: #000000);
+  cursor: pointer;
+  background-color: red($color: #000000);
+}
+
 .task_title_cheked_btn {
   display: flex;
   justify-content: space-between;
@@ -191,3 +237,4 @@
   text-align: justify;
   margin: 10px 0;
 }
+
