@@ -91,39 +91,59 @@ class Todolist {
         newTask.appendChild(taskDescription);
 
         this.sectionUndone.appendChild(newTask);
+        this.saveLocStor(newTask);
+
     }
 
     createTabExpired() {
         let expiredTab = document.createElement('div');
         expiredTab.classList.add('section_expired');
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
     saveLocStor(newTask) {
-        let currTask = document.querySelectorAll('.new__task');
-        // let jsonCurTitl = JSON.stringify(curTitle.value);
-        // localStorage.setItem('items', jsonCurTitl);
-        console.log(currTask);
-        let itemsArray = [];
+        let task = {};
 
-        localStorage.setItem('items', JSON.stringify(itemsArray));
-        const data = JSON.parse(localStorage.getItem('items'));
-        itemsArray.push(currTask.value);
-        localStorage.setItem('items', JSON.stringify(itemsArray));
+        task.inputTitle = this.input.value;
+        task.inputDescription = this.inputDescr.value
+        let json = JSON.stringify(task);
+        localStorage.setItem('task', json);
+        // Получение элемента из localstorage
+        let jsonArr = JSON.parse(localStorage.getItem('task'));
+        // console.log('Name of Task' + ' ' + '=' + ' ' + jsonArr.inputTitle + '\nDescription to task' + ' ' + '=' + ' ' + jsonArr.inputDescription)
+        
+        jsonArr.forEach() = () => this.createNewItem(newTask);
+        
+        // for(let i in jsonArr){
+        //     if (!jsonArr.hasOwnProperty(i)) continue;
 
-        // localStorage.getItem('title', currTitle);
-        // console.log(localStorage.getItem('title', currTitle))
+        //     var obj = jsonArr[i];
+        //     console.log(i);
+
+        //     for (var prop in obj) {
+        //     // skip loop if the property is from prototype
+        //     if (!obj.hasOwnProperty(prop)) continue;
+
+        //     // your code
+        //     console.log(prop + " = " + obj[prop]);
+        //     }
+        // }
+        // return false;   
     }
-///////////////////////////////////////////////////////////////////////////////////////////
+
     addTask() {
-        this.sectionUndone.classList.add('active');
+        this.sectionExpired.classList.remove('active');
         this.sectionDone.classList.remove('active');
+        this.sectionUndone.classList.add('active');
+        this.btnNotComplete.classList.add('active');
+        this.btnComplete.classList.remove('active');
+        this.btnExpired.classList.remove('active');
+
         if (this.input.value && this.inputDescr.value) {
             this.createNewItem();
             this.input.value = '';
             this.inputDescr.value = '';
-        }
-        this.saveLocStor();
 
+        }
     }
 
     removeTask(newTask) {
@@ -157,23 +177,27 @@ class Todolist {
         newTask.classList.toggle('change');
 
     }
-//////////////////////////////////////////////////////////////////////
+
     checkDate(newTask) {
+        let delChecktBtn = newTask.querySelector('.checked');
+        let delUnchecktBtn = newTask.querySelector('.unchecked');
+        let delEditktBtn = newTask.querySelector('.edit');
+        let delSaveBtn = newTask.querySelector('.save');
+
+        let selecDate = new Date(newTask.querySelector('.newDate').value);
         let currD = new Date();
-        let createDateVal = new Date(this.newDate.value)
-        console.log(currD);
-        console.log(createDateVal);
-        if (createDateVal > currD) {
-            // this.sectionDone.removeChild(newTask);
-            this.sectionUndone.removeChild(newTask);
+        if (selecDate < currD) {
             this.sectionExpired.appendChild(newTask);
-            console.log('bolwe');
+            delChecktBtn.remove();
+            delUnchecktBtn.remove();
+            delEditktBtn.remove();
+            delSaveBtn.remove();
         }
         else {
-            console.log('menwe')
+            console.log('Completed')
         }
     }
-////////////////////////////////////////////////////////////////////////
+
     checkedTask(newTask) {
         let checkTask = newTask.classList.contains('checked_task');
         let checkBtn = newTask.querySelector('.checked');
@@ -192,7 +216,8 @@ class Todolist {
 
         }
         newTask.classList.toggle('checked_task');
-        this.checkDate();///////////////////////////////////////////////////////////////////////////
+
+        this.checkDate(newTask);
     }
 
     changeTabNotComplete() {
