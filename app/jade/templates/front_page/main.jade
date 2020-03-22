@@ -5,7 +5,7 @@
         .section_add__tasks
             .new_task
                 input.title_inp(type="text", placeholder="Name your task")
-                input.description_inp(type="text", placeholder="Description task")
+                textarea.description_inp(name="", cols="30", rows="10", placeholder="Description task")
                 .new_task_button
                     input(type="date", name="date" id="date")
                     input.add(type="button", value="Add")
@@ -14,10 +14,11 @@
 
     .section_remove
         .section_remove_button
-            input(id = 'uncomplete',type="button", value="Not completed") 
-            input(id = 'complete', type="button", value="Сompleted")
-            input(id = 'expired', type="button", value="Expired") 
+            input.uncomplete(id = 'uncomplete',type="button", value="Not completed") 
+            input.complete(id = 'complete', type="button", value="Сompleted")
+            input.expired(id = 'expired', type="button", value="Expired") 
         .section_remove__tabs
             .section_undone
             .section_done
+            .section_expired
             

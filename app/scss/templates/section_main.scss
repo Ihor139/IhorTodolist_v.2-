@@ -51,6 +51,7 @@
 }
 .title_inp,
 .description_inp {
+  font-family: "Raleway Bold", sans-serif;
   text-align: center;
   width: 100%;
   padding: 10px;
@@ -61,6 +62,7 @@
 
 .description_inp {
   min-height: 100px;
+  background-color: rgba($color: #fff, $alpha: 0.5);
 }
 .new_task_button {
   margin: 15px 0;
@@ -107,13 +109,27 @@
 .section_remove_button {
   display: flex;
   justify-content: space-around;
-  input {
-    background-color: #364811;
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #000;
-  }
+
 }
+
+.uncomplete,
+.complete,
+.expired{
+  font-family: "Raleway Bold", sans-serif;
+  text-transform: uppercase;
+  flex: 1 1 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgba($color: #fff, $alpha: 0.5);
+  margin: 0 10px;
+}
+
+.uncomplete.active,
+.complete.active,
+.expired.active{
+background-color: rgba($color: #fff, $alpha: 0.8);
+}
+
 .section_remove__tabs {
   display: flex;
   justify-content: space-around;
@@ -122,7 +138,8 @@
   color: white;
 }
 .section_undone,
-.section_done {
+.section_done,
+.section_expired{
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -138,7 +155,8 @@
 }
 
 .section_done,
-.section_undone {
+.section_undone,
+.section_expired{
   display: none;
 }
 
@@ -146,6 +164,9 @@
   display: flex;
 }
 .section_undone.active {
+  display: flex;
+}
+.section_expired.active{
   display: flex;
 }
 .task {
@@ -187,8 +208,6 @@
 
 .task_title_cheked_btn {
   display: flex;
-  justify-content: space-between;
-  flex: 1 1 calc(30% - 20px);
   margin: 10px;
   input {
     padding: 5px;

@@ -18,7 +18,7 @@
         <div class="section_add__tasks">
           <div class="new_task">
             <input type="text" placeholder="Name your task" class="title_inp">
-            <input type="text" placeholder="Description task" class="description_inp">
+            <textarea name="" cols="30" rows="10" placeholder="Description task" class="description_inp"></textarea>
             <div class="new_task_button">
               <input type="date" name="date" id="date">
               <input type="button" value="Add" class="add">
@@ -31,13 +31,14 @@
       </div>
       <div class="section_remove">
         <div class="section_remove_button">
-          <input id="uncomplete" type="button" value="Not completed">
-          <input id="complete" type="button" value="Сompleted">
-          <input id="expired" type="button" value="Expired">
+          <input id="uncomplete" type="button" value="Not completed" class="uncomplete">
+          <input id="complete" type="button" value="Сompleted" class="complete">
+          <input id="expired" type="button" value="Expired" class="expired">
         </div>
         <div class="section_remove__tabs">
           <div class="section_undone"></div>
           <div class="section_done"></div>
+          <div class="section_expired"></div>
         </div>
       </div>
     </div>

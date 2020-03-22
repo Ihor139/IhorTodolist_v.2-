@@ -5,20 +5,23 @@ class Todolist {
 
         this.inputDate = document.querySelector('#date');
 
-
         this.btnAdd = document.querySelector('.add');
 
         this.sectRemTabs = document.querySelector('.section_remove__tabs');
         this.btnNotComplete = document.querySelector('#uncomplete');
         this.btnComplete = document.querySelector('#complete');
+        this.btnExpired = document.querySelector('#expired');
 
         this.sectionUndone = document.querySelector('.section_undone');
         this.sectionDone = document.querySelector('.section_done');
+        this.sectionExpired = document.querySelector('.section_expired');
 
         this.btnAdd.onclick = () => this.addTask();
         this.btnNotComplete.onclick = () => this.changeTabNotComplete();
         this.btnComplete.onclick = () => this.changeTabComplete();
+        this.btnExpired.onclick = () => this.changeTabExpired();
 
+        this.chekDate = document.querySelector('.chek_date');
     }
 
     createNewItem() {
@@ -65,17 +68,15 @@ class Todolist {
         newTaskTitle.className = "title_task";
         newTaskTitle.innerHTML = (this.input.value);
 
-        let newDate = document.createElement('input') 
-            newDate.className = 'newDate';
-            newDate.type = 'date';
-            newDate.value = (this.inputDate).value; 
-           
- 
+        let newDate = document.createElement('input')
+        newDate.className = 'newDate';
+        newDate.type = 'date';
+        newDate.value = (this.inputDate).value;
 
         let taskTitleChecked = document.createElement('div');
         taskTitleChecked.className = "task_title_cheked";
         taskTitleChecked.appendChild(newTaskTitle);
-        taskTitleChecked.appendChild(newDate); 
+        taskTitleChecked.appendChild(newDate);
         taskTitleChecked.appendChild(btnsRemCheckEdit);
 
         let p = document.createElement('p');
@@ -96,7 +97,23 @@ class Todolist {
         let expiredTab = document.createElement('div');
         expiredTab.classList.add('section_expired');
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+    saveLocStor(newTask) {
+        let currTask = document.querySelectorAll('.new__task');
+        // let jsonCurTitl = JSON.stringify(curTitle.value);
+        // localStorage.setItem('items', jsonCurTitl);
+        console.log(currTask);
+        let itemsArray = [];
 
+        localStorage.setItem('items', JSON.stringify(itemsArray));
+        const data = JSON.parse(localStorage.getItem('items'));
+        itemsArray.push(currTask.value);
+        localStorage.setItem('items', JSON.stringify(itemsArray));
+
+        // localStorage.getItem('title', currTitle);
+        // console.log(localStorage.getItem('title', currTitle))
+    }
+///////////////////////////////////////////////////////////////////////////////////////////
     addTask() {
         this.sectionUndone.classList.add('active');
         this.sectionDone.classList.remove('active');
@@ -105,7 +122,7 @@ class Todolist {
             this.input.value = '';
             this.inputDescr.value = '';
         }
-        this.checkDate();
+        this.saveLocStor();
 
     }
 
@@ -115,7 +132,6 @@ class Todolist {
     }
 
     editTask(newTask) {
-        console.log('edit');
         let classChange = newTask.classList.contains('change');
         let titleTask = newTask.querySelector('.title_task');
         let descripTask = newTask.querySelector('.description_p');
@@ -141,7 +157,23 @@ class Todolist {
         newTask.classList.toggle('change');
 
     }
-
+//////////////////////////////////////////////////////////////////////
+    checkDate(newTask) {
+        let currD = new Date();
+        let createDateVal = new Date(this.newDate.value)
+        console.log(currD);
+        console.log(createDateVal);
+        if (createDateVal > currD) {
+            // this.sectionDone.removeChild(newTask);
+            this.sectionUndone.removeChild(newTask);
+            this.sectionExpired.appendChild(newTask);
+            console.log('bolwe');
+        }
+        else {
+            console.log('menwe')
+        }
+    }
+////////////////////////////////////////////////////////////////////////
     checkedTask(newTask) {
         let checkTask = newTask.classList.contains('checked_task');
         let checkBtn = newTask.querySelector('.checked');
@@ -152,7 +184,6 @@ class Todolist {
             uncheckBtn.removeAttribute('hidden', 'hidden');
             newTask.parentNode.removeChild(newTask);
             this.sectionDone.appendChild(newTask);
-
         } else {
             checkBtn.removeAttribute('hidden', 'hidden');
             uncheckBtn.setAttribute('hidden', 'hidden');
@@ -161,32 +192,42 @@ class Todolist {
 
         }
         newTask.classList.toggle('checked_task');
-    }
-
-    checkDate(newTask) {
-        let currentD = new Date();
-        console.log(currentD);
-        // let inputDateClone = newTask.querySelector('#create_inp_date');
-        // if (currentD < inputDateClone) {
-        //     console.log('askjfoanfas')
-        // }
-        // console.log(inputDateClone);
+        this.checkDate();///////////////////////////////////////////////////////////////////////////
     }
 
     changeTabNotComplete() {
         if (this.btnNotComplete.onclick) {
-            console.log('sectionUNdone');
+            this.sectionExpired.classList.remove('active');
             this.sectionDone.classList.remove('active');
             this.sectionUndone.classList.add('active');
+
+            this.btnNotComplete.classList.add('active');
+            this.btnComplete.classList.remove('active');
+            this.btnExpired.classList.remove('active');
         }
     }
 
     changeTabComplete() {
         if (this.btnComplete.onclick) {
-            console.log('sectionDone');
+            this.sectionExpired.classList.remove('active');
             this.sectionUndone.classList.remove('active');
             this.sectionDone.classList.add('active');
 
+            this.btnNotComplete.classList.remove('active');
+            this.btnComplete.classList.add('active');
+            this.btnExpired.classList.remove('active');
+        }
+    }
+
+    changeTabExpired() {
+        if (this.btnExpired.onclick) {
+            this.sectionUndone.classList.remove('active');
+            this.sectionDone.classList.remove('active');
+            this.sectionExpired.classList.add('active');
+
+            this.btnNotComplete.classList.remove('active');
+            this.btnComplete.classList.remove('active');
+            this.btnExpired.classList.add('active');
         }
     }
 }
