@@ -109,7 +109,6 @@ class Todolist {
         localStorage.setItem('task', json);
         // Получение элемента из localstorage
         let jsonArr = JSON.parse(localStorage.getItem('task'));
-        // console.log('Name of Task' + ' ' + '=' + ' ' + jsonArr.inputTitle + '\nDescription to task' + ' ' + '=' + ' ' + jsonArr.inputDescription)
         
         jsonArr.forEach() = () => this.createNewItem(newTask);
         
