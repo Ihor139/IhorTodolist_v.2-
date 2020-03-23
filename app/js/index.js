@@ -1,5 +1,14 @@
+document.addEventListener("DOMContentLoaded", function () {
+    if (localStorage.getItem("todolist") === null) {
+        console.log('Empty');
+    } else {
+        todolist.generateToLocalStorage();
+    }
+});
+
 class Todolist {
     constructor() {
+
         this.input = document.querySelector('.title_inp');
         this.inputDescr = document.querySelector('.description_inp');
 
@@ -17,11 +26,14 @@ class Todolist {
         this.sectionExpired = document.querySelector('.section_expired');
 
         this.btnAdd.onclick = () => this.addTask();
-        this.btnNotComplete.onclick = () => this.changeTabNotComplete();
+        this.btnNotComplete.onclick = () => this.changeTabNotCompleteClick();
         this.btnComplete.onclick = () => this.changeTabComplete();
         this.btnExpired.onclick = () => this.changeTabExpired();
 
         this.chekDate = document.querySelector('.chek_date');
+
+        this.changeTabNotComplete();
+
     }
 
     createNewItem() {
@@ -64,9 +76,10 @@ class Todolist {
         btnsRemCheckEdit.appendChild(save);
         btnsRemCheckEdit.appendChild(del);
 
-        let newTaskTitle = document.createElement('h2');
+        let newTaskTitle = document.createElement('input');
         newTaskTitle.className = "title_task";
-        newTaskTitle.innerHTML = (this.input.value);
+        newTaskTitle.setAttribute('value', this.input.value)
+        newTaskTitle.setAttribute('readonly', '');
 
         let newDate = document.createElement('input')
         newDate.className = 'newDate';
@@ -79,19 +92,21 @@ class Todolist {
         taskTitleChecked.appendChild(newDate);
         taskTitleChecked.appendChild(btnsRemCheckEdit);
 
-        let p = document.createElement('p');
-        p.className = "description_p";
-        p.innerHTML = this.inputDescr.value;
+        let inputDescrip = document.createElement('textarea');
+        inputDescrip.className = "description_p";
+        inputDescrip.setAttribute('readonly', '');
+        inputDescrip.innerHTML = this.inputDescr.value
+
 
         let taskDescription = document.createElement('div');
         taskDescription.className = "task_description";
-        taskDescription.appendChild(p);
+        taskDescription.appendChild(inputDescrip);
 
         newTask.appendChild(taskTitleChecked);
         newTask.appendChild(taskDescription);
 
         this.sectionUndone.appendChild(newTask);
-        this.saveLocStor(newTask);
+        this.saveToLocalStorage(newTask);
 
     }
 
@@ -100,20 +115,63 @@ class Todolist {
         expiredTab.classList.add('section_expired');
     }
 
-    saveLocStor(newTask) {
-        let task = {};
+    saveToLocalStorage(newTask) {
+        // метод 1
 
-        task.inputTitle = this.input.value;
-        task.inputDescription = this.inputDescr.value
-        let json = JSON.stringify(task);
-        localStorage.setItem('task', json);
-        // Получение элемента из localstorage
-        let jsonArr = JSON.parse(localStorage.getItem('task'));
-        
-        jsonArr.forEach() = () => this.createNewItem(newTask);
-        
+        let titVal = newTask.querySelector('.title_task');
+        let descVal = newTask.querySelector('.description_p');
+        let dateVal = newTask.querySelector('.newDate');
+
+        let valueTitle = titVal.value;
+        let valueDescript = descVal.value;
+        let valueDate = dateVal.value;
+
+        let objTodo = { valueTitle, valueDescript, valueDate };
+
+        let todoArray = localStorage.getItem('todolist') === null ? [] : JSON.parse(localStorage.getItem('todolist'));
+        todoArray.push(objTodo);
+        localStorage["todolist"] = JSON.stringify(todoArray);
+        let jsonArr = JSON.parse(localStorage.getItem('todolist'));
+        console.log(jsonArr[1]);
+
+        // console.log(JSON.parse(localStorage.getItem('todolist'),[2]));
+
+        // метод 2
+
+
+        // this.lastId = JSON.parse(localStorage["lastId"] || "0");
+        // this.lastId += 1; 
+        // id = this.lastId;
+        // this.todoArray.push(id, valueTitle, valueDescript, valueDate)
+
+        // if(dataTitle && dataDescr && dataDate){
+        //     console.log('heasfa')
+        // }
+
+        // метод 3
+
+
+        // let task = {};
+
+        // task.inputTitle = this.input.value;
+        // task.inputDescription = this.inputDescr.value;
+        // task.inputDate = this.inputDate.value;
+        // let json = JSON.stringify(task);
+        // localStorage.setItem('task', json);
+        // // Получение элемента из localstorage
+        // let jsonArr = JSON.parse(localStorage.getItem('task'));
+
+        // console.log('title:' + jsonArr.inputTitle);
+        // console.log('descr:' + jsonArr.inputDescription);
+        // console.log('date:'  + jsonArr.inputDate);
+
+        // jsonArr.forEach() = () => this.createNewItem(newTask);
+
         // for(let i in jsonArr){
+        //     console.log(i);
+
         //     if (!jsonArr.hasOwnProperty(i)) continue;
+        //     console.log(i);
 
         //     var obj = jsonArr[i];
         //     console.log(i);
@@ -129,19 +187,18 @@ class Todolist {
         // return false;   
     }
 
-    addTask() {
-        this.sectionExpired.classList.remove('active');
-        this.sectionDone.classList.remove('active');
-        this.sectionUndone.classList.add('active');
-        this.btnNotComplete.classList.add('active');
-        this.btnComplete.classList.remove('active');
-        this.btnExpired.classList.remove('active');
+    generateToLocalStorage() {
+        console.log('generate');
 
-        if (this.input.value && this.inputDescr.value) {
+    }
+
+    addTask() {
+        this.changeTabNotComplete();
+        if (this.input.value && this.inputDescr.value && this.inputDate.value) {
             this.createNewItem();
             this.input.value = '';
             this.inputDescr.value = '';
-
+            this.inputDate.value = '';
         }
     }
 
@@ -158,16 +215,16 @@ class Todolist {
         let btnSave = newTask.querySelector('.save');
 
         if (classChange) {
-            titleTask.setAttribute('contenteditable', 'false');
+            titleTask.setAttribute('readonly', '');
             titleTask.classList.remove('check1');
-            descripTask.setAttribute('contenteditable', 'false');
+            descripTask.setAttribute('readonly', '');
             descripTask.classList.remove('check1');
             btnEdit.removeAttribute('hidden', '');
             btnSave.setAttribute('hidden', '');
         } else {
-            titleTask.setAttribute('contenteditable', '');
+            titleTask.removeAttribute('readonly', '');
             titleTask.classList.add('check1');
-            descripTask.setAttribute('contenteditable', '');
+            descripTask.removeAttribute('readonly', '');
             descripTask.classList.add('check1');
             btnEdit.setAttribute('hidden', '');
             btnSave.removeAttribute('hidden', '');
@@ -220,6 +277,15 @@ class Todolist {
     }
 
     changeTabNotComplete() {
+        this.sectionExpired.classList.remove('active');
+        this.sectionDone.classList.remove('active');
+        this.sectionUndone.classList.add('active');
+        this.btnNotComplete.classList.add('active');
+        this.btnComplete.classList.remove('active');
+        this.btnExpired.classList.remove('active');
+    }
+
+    changeTabNotCompleteClick() {
         if (this.btnNotComplete.onclick) {
             this.sectionExpired.classList.remove('active');
             this.sectionDone.classList.remove('active');
