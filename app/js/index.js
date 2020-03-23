@@ -189,6 +189,7 @@ class Todolist {
 
     generateFromLocalStorage() {
         console.log('generate');
+        this.createNewItem();
 
     }
 
