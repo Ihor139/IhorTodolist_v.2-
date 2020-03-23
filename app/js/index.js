@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("todolist") === null) {
         console.log('Empty');
     } else {
-        todolist.generateToLocalStorage();
+        todolist.generateFromLocalStorage();
     }
 });
 
@@ -187,7 +187,7 @@ class Todolist {
         // return false;   
     }
 
-    generateToLocalStorage() {
+    generateFromLocalStorage() {
         console.log('generate');
 
     }
