@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("todolist") === null) {
-        console.log('Empty');
+        console.log('LocalStorage is empty');
     } else {
         todolist.generateFromLocalStorage();
     }
@@ -116,8 +116,6 @@ class Todolist {
     }
 
     saveToLocalStorage(newTask) {
-        // метод 1
-
         let titVal = newTask.querySelector('.title_task');
         let descVal = newTask.querySelector('.description_p');
         let dateVal = newTask.querySelector('.newDate');
@@ -132,59 +130,26 @@ class Todolist {
         todoArray.push(objTodo);
         localStorage["todolist"] = JSON.stringify(todoArray);
         let jsonArr = JSON.parse(localStorage.getItem('todolist'));
-        console.log(jsonArr[1]);
 
-        // console.log(JSON.parse(localStorage.getItem('todolist'),[2]));
+        for (let i in jsonArr) {
+            if (!jsonArr.hasOwnProperty(i)) continue;
 
-        // метод 2
+            var obj = jsonArr[i];
+            // console.log(i);
+            for (var prop in obj) {
+                // skip loop if the property is from prototype
+                if (!obj.hasOwnProperty(prop)) continue;
 
+                // your code
+                console.log(prop + " = " + obj[prop]);
 
-        // this.lastId = JSON.parse(localStorage["lastId"] || "0");
-        // this.lastId += 1; 
-        // id = this.lastId;
-        // this.todoArray.push(id, valueTitle, valueDescript, valueDate)
-
-        // if(dataTitle && dataDescr && dataDate){
-        //     console.log('heasfa')
-        // }
-
-        // метод 3
-
-
-        // let task = {};
-
-        // task.inputTitle = this.input.value;
-        // task.inputDescription = this.inputDescr.value;
-        // task.inputDate = this.inputDate.value;
-        // let json = JSON.stringify(task);
-        // localStorage.setItem('task', json);
-        // // Получение элемента из localstorage
-        // let jsonArr = JSON.parse(localStorage.getItem('task'));
-
-        // console.log('title:' + jsonArr.inputTitle);
-        // console.log('descr:' + jsonArr.inputDescription);
-        // console.log('date:'  + jsonArr.inputDate);
-
-        // jsonArr.forEach() = () => this.createNewItem(newTask);
-
-        // for(let i in jsonArr){
-        //     console.log(i);
-
-        //     if (!jsonArr.hasOwnProperty(i)) continue;
-        //     console.log(i);
-
-        //     var obj = jsonArr[i];
-        //     console.log(i);
-
-        //     for (var prop in obj) {
-        //     // skip loop if the property is from prototype
-        //     if (!obj.hasOwnProperty(prop)) continue;
-
-        //     // your code
-        //     console.log(prop + " = " + obj[prop]);
-        //     }
-        // }
-        // return false;   
+                // let saveTitle = newTask.querySelector('.title_task');
+                // console.log(saveTitle, obj[prop]);
+                // saveTitle.setAttribute('value', obj[prop]);
+            }
+            return;
+        }
+        return false;
     }
 
     generateFromLocalStorage() {

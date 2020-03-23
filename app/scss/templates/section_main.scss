@@ -52,7 +52,6 @@
 .title_inp,
 .description_inp {
   font-family: "Raleway Bold", sans-serif;
-  text-align: center;
   width: 100%;
   padding: 10px;
   // border: 2px solid #000000;
@@ -119,9 +118,19 @@
   text-transform: uppercase;
   flex: 1 1 100%;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 20px;
+  color: #000;
   background-color: rgba($color: #fff, $alpha: 0.5);
   margin: 0 10px;
+  transition: all .5s ease-in;
+}
+
+#uncomplete:hover,
+#complete:hover,
+#expired:hover{
+  cursor: pointer;
+  color: #fff;
+  background-color: #8a2be2;
 }
 
 .uncomplete.active,
@@ -133,7 +142,6 @@ background-color: rgba($color: #fff, $alpha: 0.8);
 .section_remove__tabs {
   display: flex;
   justify-content: space-around;
-  width: 100%;
   margin: 15px 5px;
   color: white;
 }
@@ -188,7 +196,7 @@ background-color: rgba($color: #fff, $alpha: 0.8);
   font-family: "Raleway Bold", sans-serif;
   text-transform: uppercase;
   border-radius: 20px;
-  padding: 3px 20px;
+  padding: 7px 20px;
   background-color: rgba($color: #fff, $alpha: 0.55);
   color: #000;
   transition: all ease-in 0.4s;
@@ -196,8 +204,19 @@ background-color: rgba($color: #fff, $alpha: 0.8);
 }
 
 .title_task {
+  font-family: 'Montserrat Regular',sans-serif;
+  font-size: 20px;
   flex: 1 1 calc(50% - 10px);
-  padding: 5px;
+  margin: 0 10px;
+  padding: 5px 15px;
+  background-color: rgba($color: #fff, $alpha: 0.55);
+  border-radius: 20px;
+}
+.title_task.check1,
+.description_p.check1{
+  background: linear-gradient(to right,  #9a1692,#7736af);
+  text-decoration: underline;
+  color: #fff;
 }
 
 .task_title_cheked{
@@ -218,7 +237,17 @@ background-color: rgba($color: #fff, $alpha: 0.8);
     border: 2px solid #000000;
     margin: 10px 0;
     padding: 10px;
+    
   }
+}
+.task_description textarea{
+  font-family: 'Montserrat Regular',sans-serif;
+  font-size: 15px;
+  width: 100%;
+  min-height: 100px;
+  padding: 5px 15px;
+  border-radius: 20px;
+  background-color: rgba($color: #fff, $alpha: 0.5);
 }
 .new__task {
   display: flex;
@@ -234,6 +263,7 @@ background-color: rgba($color: #fff, $alpha: 0.8);
 .edit,
 .save,
 .remove {
+  font-size: 17px;
   border-radius: 20px;
   padding: 5px;
   margin: 3px;
