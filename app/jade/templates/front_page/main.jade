@@ -1,7 +1,14 @@
 .container
-    .section_add
-        .section_add__title
+    .section_add__title
+            //- button.hamburger.hamburger--emphatic
+            //-     span.hamburger-box
+            //-     span.hamburger-inner
+            input(type="checkbox", id="menu_checkbox")
+            label.toggle_button(for="menu_checkbox")
+                span
             h1 TodoList
+    .section_add
+        
         .section_add__tasks
             .new_task
                 input.title_inp(type="text", placeholder="Name your task")

@@ -1,3 +1,25 @@
+#menu_checkbox {
+  display: none;
+}
+
+.toggle_button>span, .toggle_button>span::before, .toggle_button>span::after {
+  display: block;
+  position: absolute;
+  width: 30px;
+  height: 2px;
+  background-color: #ffffff;
+}
+.toggle_button>span::before {
+  content: '';
+  top: -8px;
+}
+.toggle_button>span::after {
+  content: '';
+  top: 8px;
+}
+
+
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -22,7 +44,10 @@
   flex: 1 1 20%;
 }
 .section_add__title {
-  margin: 15px 5px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex; 
   h1 {
     font-family: "PlayfairDisplay Italic", sans-serif;
     font-size: 40px;
