@@ -1,4 +1,4 @@
-.menu{
+.menu {
   display: none;
   width: 100%;
   height: 100%;
@@ -6,16 +6,16 @@
   font-size: 25px;
   transition: all ease 0.5s;
 }
-.menu_bars{
+.menu_bars {
   display: none;
 }
 .menu_plus.visibility,
-.menu_bars.visibility{
+.menu_bars.visibility {
   display: flex;
 }
 
 .menu_plus.unvisibility,
-.menu_bars.unvisibility{
+.menu_bars.unvisibility {
   display: none;
 }
 
@@ -25,7 +25,7 @@
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(90deg, #4c2e66, #5b2f8d);
+  background: linear-gradient(90deg, #4c2e66, #4c21b4);
 }
 .section_task {
   display: flex;
@@ -99,6 +99,12 @@
 .description_inp {
   min-height: 100px;
   background-color: rgba($color: #fff, $alpha: 0.9);
+}
+
+.title_inp.empty,
+.description_inp.empty,
+#date.empty{
+  border: 1px solid red;
 }
 .new_task_button {
   margin: 15px 0;
@@ -249,7 +255,7 @@
 }
 .title_task.check1,
 .description_p.check1 {
-  background: linear-gradient(90deg, #391437, #5d258d);
+  background: linear-gradient(90deg, #391437, #4c21b4);
   text-decoration: underline;
   color: #fff;
 }
@@ -316,7 +322,15 @@
   cursor: pointer;
 }
 .section_description_todo {
-  line-height: 1.5;
-  text-align: justify;
-  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  p {
+    font-family: "PlayfairDisplay Italic", sans-serif !important;
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: justify;
+    margin: 10px 0;
+  }
 }

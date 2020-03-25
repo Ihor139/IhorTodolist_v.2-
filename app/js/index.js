@@ -252,7 +252,16 @@ class Todolist {
             this.input.value = '';
             this.inputDescr.value = '';
             this.inputDate.value = '';
+            this.input.classList.remove('empty');
+            this.inputDescr.classList.remove('empty')
+            this.inputDate.classList.remove('empty')
+        } else{
+            console.log('qrea is empty')
+            this.input.classList.add('empty');
+            this.inputDescr.classList.add('empty')
+            this.inputDate.classList.add('empty')
         }
+        
     }
 
     removeTask(newTask) {
@@ -400,24 +409,18 @@ class Todolist {
         if (!addClass) {
             this.sectionRemove.classList.add('unvisibility');
             this.sectionAdd.classList.add('visibility');
-            } else {
+            this.btnMenuPlus.classList.add('visibility');
+            this.btnMenuBars.classList.add('unvisibility');
+
+        } else {
             this.sectionRemove.classList.remove('unvisibility');
             this.sectionAdd.classList.remove('visibility');
         }
 
-        if (!addClass) {
-            this.btnMenuPlus.classList.add('visibility');
-            this.btnMenuBars.classList.add('unvisibility');
-        }
         this.btnMenuPlus.classList.toggle('visibility');
         this.btnMenuPlus.classList.toggle('unvisibility');
-        this.btnMenuBars.classList.toggle('unvisibility');
         this.btnMenuBars.classList.toggle('visibility');
-        // else {
-        //     this.btnMenuPlus.classList.a('unvisibility');
-        //     this.btnMenuBars.classList.remove('visibility');
-
-        // }
+        this.btnMenuBars.classList.toggle('unvisibility');
     }
 }
 
