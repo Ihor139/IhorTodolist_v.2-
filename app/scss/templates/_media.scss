@@ -1,119 +1,160 @@
 @media only screen and (max-width: 1200px) {
-    body,
-    html {
-        font-size: 15px !important;
-    }
+  body,
+  html {
+    font-size: 15px !important;
+  }
 }
 
 @media only screen and (max-width: 992px) {
-    body,
-    html {
-        font-size: 14px !important;
-    }
+  body,
+  html {
+    font-size: 14px !important;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    body,
-    html {
-        font-size: 13px !important;
-    }
+  body,
+  html {
+    font-size: 13px !important;
+  }
 }
 
 @media only screen and (max-width: 480px) {
-    body,
-    html {
-        font-size: 12px !important;
-    }
+  body,
+  html {
+    font-size: 12px !important;
+  }
 }
 
 @media only screen and (max-width: 320px) {
-    body,
-    html {
-        font-size: 11px !important;
-    }
+  body,
+  html {
+    font-size: 11px !important;
+  }
 }
-
 
 /*-----------style/*-----------*/
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-    
 }
 
-@media (min-width: 768px) and (max-width: 991.98px) {}
+@media (min-width: 768px) and (max-width: 991.98px) {
+}
 
-@media (min-width: 992px) and (max-width: 1199.98px) {}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+}
 
-@media (max-width: 1440px) {}
+@media (max-width: 1440px) {
+}
 
-@media (max-width: 1024px) {}
+@media (max-width: 1024px) {
+}
 
 @media (max-width: 900px) {
 }
 
 @media (min-width: 320px) and (max-width: 899px) {
-    .section_add__title{
-        position: fixed;
-        top: 0;
-        padding: 0 20px;
-        width: 100%;
-        background-color: rgba($color: #000000, $alpha: .7);
-        display: flex;justify-content: space-between;
+    .menu{
+        display: flex;
     }
-    .section_add{
-        display: none;
-    }
+  .section_remove.visibility,
+  .section_add.visibility {
+    display: flex !important;
+  }
+  .section_remove.unvisibility,
+  .section_add.unvisibility {
+    display: none !important;
+  }
+  .section_add__title {
+    padding: 0 20px;
+    width: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.7);
+    display: flex;
+    justify-content: space-between;
+  }
+  .section_add {
+    display: none;
+  }
+  .section_remove {
+    margin: 0;
+    padding: 5px;
+  }
+  .section_done,
+  .section_expired,
+  .section_undone {
+    margin: unset;
+    padding: unset;
+  }
+  .new__task {
+    width: 100%;
+    margin: 5px 0px;
+    padding: 8px 5px;
+  }
+  .task_title_cheked {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 @media (min-width: 900px) {
-    .toggle_button{
-        display: none;
-    }
+  .toggle_button {
+    display: none;
+  }
 }
 
 @media (max-width: 575.98px) {
 }
 
 @media (max-width: 425px) {
-    
-    .section_add, .section_remove{
-        padding: 5px;
-        margin: 5px;
-    }
-    .section_remove{
-        flex: unset;
-        width: 100%;
-    }
-    .section_remove_button{
-        flex-wrap: wrap;
-    }
-    .complete, .expired, .uncomplete{
-        margin: 5px;
-    }
-    .section_remove__tabs{
-        margin-top: 10px;
-        margin: unset;
-    }
-    .section_done, .section_expired, .section_undone{
-        margin: unset;
-    }
-    .new__task{
-        margin: unset;
-        padding: 5px 0;
-    }
-    .task_title_cheked{
-        margin: unset;
-        flex-wrap: wrap;
-    }
-    .title_task{
-        margin: 5px 0;
-        padding: 5px 10px;
-    }
-    .newDate{
-        padding: 7px 4px;
-    }
-    .checked, .edit, .remove, .save, .unchecked{
-        font-size: 15px;
-    }
+  .section_add,
+  .section_remove {
+    padding: 5px;
+    margin: 5px;
+  }
+  .section_remove {
+    flex: unset;
+    width: 1000%;
+    margin: 0 5px;
+  }
+  .section_remove_button {
+    flex-wrap: wrap;
+  }
+  .complete,
+  .expired,
+  .uncomplete {
+    margin: 5px;
+  }
+  .section_remove__tabs {
+    margin-top: 10px;
+    margin: unset;
+  }
+  .section_done,
+  .section_expired,
+  .section_undone {
+    margin: unset;
+  }
+  .new__task {
+    margin: unset;
+    padding: 5px 5px;
+  }
+  .task_title_cheked {
+    margin: unset;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .title_task {
+    margin: 5px 0;
+    padding: 5px 10px;
+  }
+  .newDate {
+    padding: 7px 4px;
+  }
+  .checked,
+  .edit,
+  .remove,
+  .save,
+  .unchecked {
+    font-size: 15px;
+  }
 }
 
 // @media (max-width: 320px) {}

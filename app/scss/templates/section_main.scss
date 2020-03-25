@@ -1,31 +1,35 @@
-#menu_checkbox {
+.menu{
+  display: none;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 25px;
+  transition: all ease 0.5s;
+}
+.menu_bars{
+  display: none;
+}
+.menu_plus.visibility,
+.menu_bars.visibility{
+  display: flex;
+}
+
+.menu_plus.unvisibility,
+.menu_bars.unvisibility{
   display: none;
 }
 
-.toggle_button>span, .toggle_button>span::before, .toggle_button>span::after {
-  display: block;
-  position: absolute;
-  width: 30px;
-  height: 2px;
-  background-color: #ffffff;
-}
-.toggle_button>span::before {
-  content: '';
-  top: -8px;
-}
-.toggle_button>span::after {
-  content: '';
-  top: 8px;
-}
-
-
-
 .container {
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
+  flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  background: linear-gradient(90deg, #4c2e66, #5b2f8d);
+}
+.section_task {
+  display: flex;
+  flex-wrap: wrap;
 }
 .section_add,
 .section_remove {
@@ -34,12 +38,20 @@
   justify-content: start;
   align-items: center;
   min-height: 15%;
-  background-color: rgba($color: #fff, $alpha: 0.3);
+  background-color: rgba($color: #fff, $alpha: 0.7);
   margin: 15px;
   padding: 20px 30px;
   border: 2px solid #ffffff;
   border-radius: 20px;
 }
+// .section_remove.visibility,
+// .section_add.visibility{
+//   display: flex !important;
+// }
+// .section_remove.unvisibility,
+// .section_add.unvisibility{
+//   display: none !important;
+// }
 .section_add {
   flex: 1 1 20%;
 }
@@ -47,11 +59,11 @@
   width: 100%;
   align-items: center;
   justify-content: center;
-  display: flex; 
+  display: flex;
   h1 {
     font-family: "PlayfairDisplay Italic", sans-serif;
-    font-size: 40px;
-    letter-spacing: 10px;
+    font-size: calc(27px + 1.7857vw);
+    letter-spacing: 15px;
     color: white;
   }
 }
@@ -71,7 +83,7 @@
   align-items: center;
   width: 100%;
   input {
-    background-color: rgba($color: #fff, $alpha: 0.5);
+    background-color: rgba($color: #fff, $alpha: 0.9);
   }
 }
 .title_inp,
@@ -86,7 +98,7 @@
 
 .description_inp {
   min-height: 100px;
-  background-color: rgba($color: #fff, $alpha: 0.5);
+  background-color: rgba($color: #fff, $alpha: 0.9);
 }
 .new_task_button {
   margin: 15px 0;
@@ -121,7 +133,7 @@
 .add:hover {
   cursor: pointer;
   color: #fff !important;
-  background-color: blueviolet !important;
+  background-color: #4a2869 !important;
 }
 
 .section_remove {
@@ -133,12 +145,11 @@
 .section_remove_button {
   display: flex;
   justify-content: space-around;
-
 }
 
 .uncomplete,
 .complete,
-.expired{
+.expired {
   font-family: "Raleway Bold", sans-serif;
   text-transform: uppercase;
   flex: 1 1 100%;
@@ -147,21 +158,21 @@
   color: #000;
   background-color: rgba($color: #fff, $alpha: 0.5);
   margin: 0 10px;
-  transition: all .5s ease-in;
+  transition: all 0.5s ease-in;
 }
 
 #uncomplete:hover,
 #complete:hover,
-#expired:hover{
+#expired:hover {
   cursor: pointer;
   color: #fff;
-  background-color: #8a2be2;
+  background-color: #4a2869;
 }
 
 .uncomplete.active,
 .complete.active,
-.expired.active{
-background-color: rgba($color: #fff, $alpha: 0.8);
+.expired.active {
+  background-color: rgba($color: #fff, $alpha: 0.9);
 }
 
 .section_remove__tabs {
@@ -172,7 +183,7 @@ background-color: rgba($color: #fff, $alpha: 0.8);
 }
 .section_undone,
 .section_done,
-.section_expired{
+.section_expired {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -189,7 +200,7 @@ background-color: rgba($color: #fff, $alpha: 0.8);
 
 .section_done,
 .section_undone,
-.section_expired{
+.section_expired {
   display: none;
 }
 
@@ -199,16 +210,16 @@ background-color: rgba($color: #fff, $alpha: 0.8);
 .section_undone.active {
   display: flex;
 }
-.section_expired.active{
+.section_expired.active {
   display: flex;
 }
-.task {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 3px solid red;
-}
+// .task {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   border-bottom: 3px solid red;
+// }
 .task_title_cheked {
   display: flex;
   justify-content: space-between;
@@ -217,34 +228,33 @@ background-color: rgba($color: #fff, $alpha: 0.8);
   margin: 10px 0;
 }
 
-.newDate{
+.newDate {
   font-family: "Raleway Bold", sans-serif;
   text-transform: uppercase;
   border-radius: 20px;
   padding: 7px 20px;
-  background-color: rgba($color: #fff, $alpha: 0.55);
+  background-color: rgba($color: #fff, $alpha: 0.9);
   color: #000;
   transition: all ease-in 0.4s;
-
 }
 
 .title_task {
-  font-family: 'Montserrat Regular',sans-serif;
+  font-family: "Montserrat Regular", sans-serif;
   font-size: 20px;
   flex: 1 1 calc(50% - 10px);
   margin: 0 10px;
   padding: 5px 15px;
-  background-color: rgba($color: #fff, $alpha: 0.55);
+  background-color: rgba($color: #fff, $alpha: 0.9);
   border-radius: 20px;
 }
 .title_task.check1,
-.description_p.check1{
-  background: linear-gradient(to right,  #9a1692,#7736af);
+.description_p.check1 {
+  background: linear-gradient(90deg, #391437, #5d258d);
   text-decoration: underline;
   color: #fff;
 }
 
-.task_title_cheked{
+.task_title_cheked {
   color: green($color: #000000);
   cursor: pointer;
   background-color: red($color: #000000);
@@ -262,11 +272,10 @@ background-color: rgba($color: #fff, $alpha: 0.8);
     border: 2px solid #000000;
     margin: 10px 0;
     padding: 10px;
-    
   }
 }
-.task_description textarea{
-  font-family: 'Montserrat Regular',sans-serif;
+.task_description textarea {
+  font-family: "Montserrat Regular", sans-serif;
   font-size: 15px;
   width: 100%;
   min-height: 100px;
@@ -293,7 +302,7 @@ background-color: rgba($color: #fff, $alpha: 0.8);
   padding: 5px;
   margin: 3px;
   // cursor: none;
-  background-color: rgba($color: #fff, $alpha: 0.5);
+  background-color: rgba($color: #fff, $alpha: 0.9);
   color: #000000;
   transition: all ease-in 0.5s;
 }
@@ -303,7 +312,7 @@ background-color: rgba($color: #fff, $alpha: 0.8);
 .save:hover,
 .remove:hover {
   color: #fff;
-  background-color: blueviolet;
+  background-color: #4a2869;
   cursor: pointer;
 }
 .section_description_todo {
@@ -311,4 +320,3 @@ background-color: rgba($color: #fff, $alpha: 0.8);
   text-align: justify;
   margin: 10px 0;
 }
-
