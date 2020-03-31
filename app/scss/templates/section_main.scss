@@ -1,5 +1,6 @@
 .menu {
   display: none;
+  align-items: center;
   width: 100%;
   height: 100%;
   color: white;
@@ -21,14 +22,16 @@
 
 .container {
   display: flex;
-  // flex-wrap: wrap;
+  flex-wrap: wrap;
   flex-direction: column;
   width: 100%;
-  min-height: 100vh;
-  background: linear-gradient(90deg, #4c2e66, #4c21b4);
+  height: calc(100vh - 0px);
+  background: linear-gradient(90deg, #2d1b3d, #3c1991);
+  overflow: hidden;
 }
 .section_task {
   display: flex;
+  height: 90%;
   flex-wrap: wrap;
 }
 .section_add,
@@ -37,23 +40,16 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  min-height: 15%;
+  height: 100vh;
   background-color: rgba($color: #fff, $alpha: 0.7);
-  margin: 15px;
-  padding: 20px 30px;
+  margin: 10px;
+  padding: 5px;
   border: 2px solid #ffffff;
   border-radius: 20px;
 }
-// .section_remove.visibility,
-// .section_add.visibility{
-//   display: flex !important;
-// }
-// .section_remove.unvisibility,
-// .section_add.unvisibility{
-//   display: none !important;
-// }
 .section_add {
   flex: 1 1 20%;
+  height: 100%;
 }
 .section_add__title {
   width: 100%;
@@ -103,7 +99,7 @@
 
 .title_inp.empty,
 .description_inp.empty,
-#date.empty{
+#date.empty {
   border: 1px solid red;
 }
 .new_task_button {
@@ -145,7 +141,7 @@
 .section_remove {
   flex: 1 1 60%;
   display: flex;
-  // justify-content: center;
+  height: 100%;
   align-items: unset;
 }
 .section_remove_button {
@@ -184,19 +180,19 @@
 .section_remove__tabs {
   display: flex;
   justify-content: space-around;
-  margin: 15px 5px;
   color: white;
+  margin: 10px 0;
+  height: 100%;
+  overflow: hidden;
 }
 .section_undone,
 .section_done,
 .section_expired {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   justify-content: flex-start;
-  flex: 1 1 50%;
-  min-width: 49%;
+  flex: 1 1;
   margin: 10px;
-  padding: 10px;
   background-color: rgba($color: #fff, $alpha: 0.5);
   border-radius: 20px;
   h2 {
@@ -211,21 +207,18 @@
 }
 
 .section_done.active {
+  overflow-y: scroll;
   display: flex;
 }
+
 .section_undone.active {
   display: flex;
+  overflow-y: scroll;
 }
 .section_expired.active {
+  overflow-y: scroll;
   display: flex;
 }
-// .task {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   border-bottom: 3px solid red;
-// }
 .task_title_cheked {
   display: flex;
   justify-content: space-between;
@@ -307,7 +300,6 @@
   border-radius: 20px;
   padding: 5px;
   margin: 3px;
-  // cursor: none;
   background-color: rgba($color: #fff, $alpha: 0.9);
   color: #000000;
   transition: all ease-in 0.5s;

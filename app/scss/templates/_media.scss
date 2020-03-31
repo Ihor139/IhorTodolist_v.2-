@@ -54,9 +54,9 @@
 }
 
 @media (min-width: 320px) and (max-width: 899px) {
-    .menu{
-        display: flex;
-    }
+  .menu {
+    display: flex;
+  }
   .section_remove.visibility,
   .section_add.visibility {
     display: flex !important;
@@ -102,6 +102,7 @@
 }
 
 @media (max-width: 575.98px) {
+
 }
 
 @media (max-width: 425px) {
@@ -155,6 +156,25 @@
   .unchecked {
     font-size: 15px;
   }
+  // .section_done.active {
+  //   height: 72%;
+  // }
+  // .section_undone.active {
+  //   height: 72%;
+  // }
+  // .section_expired.active {
+  //   height: 72%;
+  // }
 }
 
-// @media (max-width: 320px) {}
+@media (max-width: 320px) {
+  // .section_done.active {
+  //   height: 72%;
+  // }
+  // .section_undone.active {
+  //   height: 72%;
+  // }
+  // .section_expired.active {
+  //   height: 72%;
+  // }
+}

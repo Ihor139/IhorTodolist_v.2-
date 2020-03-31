@@ -2,9 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("todolist") === null) {
         console.log('LocalStorage is empty');
     } else {
-        todolist.createFromLocalNewItem();
-        // todolist.checkedTask();
-
+        todolist.createFromLocalNewItem();   
     }
 });
 
@@ -42,6 +40,7 @@ class Todolist {
 
         this.changeTabNotComplete();
         this.menu();
+        
     }
 
     createNewItem() {
@@ -51,13 +50,13 @@ class Todolist {
         let check = document.createElement("button");
         check.className = "checked";
         check.innerHTML = '<i class="fas fa-check-double"></i>';
-        check.onclick = () => this.checkedTask(newTask);
+        check.onclick = () => this.checkTask(newTask);
 
         let uncheck = document.createElement('button');
         uncheck.className = "unchecked";
         uncheck.innerHTML = '<i class="fas fa-times"></i>';
         uncheck.setAttribute('hidden', 'hidden');
-        uncheck.onclick = () => this.checkedTask(newTask);
+        uncheck.onclick = () => this.checkTask(newTask);
 
         let edit = document.createElement("button");
         edit.className = "edit";
@@ -90,6 +89,7 @@ class Todolist {
         newTaskTitle.setAttribute('readonly', '');
 
         let newDate = document.createElement('input')
+        newDate.setAttribute('readonly', '');
         newDate.className = 'newDate';
         newDate.type = 'date';
         newDate.value = (this.inputDate).value;
@@ -131,13 +131,13 @@ class Todolist {
             let check = document.createElement("button");
             check.className = "checked";
             check.innerHTML = '<i class="fas fa-check-double"></i>';
-            check.onclick = () => this.checkedTask(newTask);
+            check.onclick = () => (this.checkTask(newTask), this.checkTaskFromLocal(newTask));
 
             let uncheck = document.createElement('button');
             uncheck.className = "unchecked";
             uncheck.innerHTML = '<i class="fas fa-times"></i>';
             uncheck.setAttribute('hidden', 'hidden');
-            uncheck.onclick = () => this.checkedTask(newTask);
+            uncheck.onclick = () => (this.checkTask(newTask), this.checkTaskFromLocal(newTask));
 
             let edit = document.createElement("button");
             edit.className = "edit";
@@ -172,6 +172,7 @@ class Todolist {
             let newDate = document.createElement('input')
             newDate.className = 'newDate';
             newDate.type = 'date';
+            newDate.setAttribute('readonly', '')
             newDate.value = objTodo.valueDate;
 
             let taskTitleChecked = document.createElement('div');
@@ -194,10 +195,8 @@ class Todolist {
             newTask.appendChild(taskDescription);
 
             this.sectionUndone.appendChild(newTask);
-            // this.localCheckedTask(newTask);
-
         })
-
+        
     }
 
 
@@ -214,35 +213,47 @@ class Todolist {
         let valueTitle = titVal.value;
         let valueDescript = descVal.value;
         let valueDate = dateVal.value;
-
-        let objTodo = { valueTitle, valueDescript, valueDate };
+        let objTodo = { valueTitle, valueDescript, valueDate};
 
         let todoArray = localStorage.getItem('todolist') === null ? [] : JSON.parse(localStorage.getItem('todolist'));
         todoArray.push(objTodo);
         localStorage["todolist"] = JSON.stringify(todoArray);
+    }
 
-        // let jsonArr = JSON.parse(localStorage.getItem('todolist'));
+    checkTaskFromLocal(newTask) {
+        let objTodoList = JSON.parse(localStorage.getItem('todolist'));
+        console.log(objTodoList);
+        let status = newTask.className;
+        console.log(status);
+        // let objTodo = { valueTitle, valueDescript, valueDate };
+        console.log('check from Local');
+        
+        for(let i in objTodoList){
+            if (!objTodoList.hasOwnProperty(i)) continue;
+        
+            var obj = objTodoList[i];
+            console.log(i);
+        
+            for (var prop in obj) {
+              // skip loop if the property is from prototype
+              if (!obj.hasOwnProperty(prop)) continue;
+        
+              // your code
+              console.log(prop + " = " + obj[prop]);
+            }
+          }
+          return false;
 
-        // for (let i in jsonArr) {
-        //     if (!jsonArr.hasOwnProperty(i)) continue;
-
-        //     var obj = jsonArr[i];
-        //     console.log(i);
-        //     for (var prop in obj) {
-        //         // skip loop if the property is from prototype
-        //         if (!obj.hasOwnProperty(prop)) continue;
-
-        //         // your code
-        //         console.log(prop + " = " + obj[prop]);
-
-        //         let saveTitle = newTask.querySelector('.title_task');
-        //         console.log(saveTitle, obj[prop]);
-        //         saveTitle.setAttribute('value', obj[prop]);
-        //     }
-        //     return;
+        // switch (this.objTodo.status) {
+        //     case ("checked_task"):
+        //         this.sectionUndone.appendChild(newTask);
+        //         break;
+        //     case ("expired"):
+        //         this.sectionUndone.appendChild(newTask);
+        //         break;
         // }
-        // return false;
 
+        
     }
 
     addTask() {
@@ -255,13 +266,12 @@ class Todolist {
             this.input.classList.remove('empty');
             this.inputDescr.classList.remove('empty')
             this.inputDate.classList.remove('empty')
-        } else{
-            console.log('qrea is empty')
+        } else {
             this.input.classList.add('empty');
             this.inputDescr.classList.add('empty')
             this.inputDate.classList.add('empty')
         }
-        
+
     }
 
     removeTask(newTask) {
@@ -273,21 +283,32 @@ class Todolist {
         let classChange = newTask.classList.contains('change');
         let titleTask = newTask.querySelector('.title_task');
         let descripTask = newTask.querySelector('.description_p');
+        let dateTask = newTask.querySelector('.newDate');
         let btnEdit = newTask.querySelector('.edit');
         let btnSave = newTask.querySelector('.save');
 
         if (classChange) {
             titleTask.setAttribute('readonly', '');
             titleTask.classList.remove('check1');
+
             descripTask.setAttribute('readonly', '');
             descripTask.classList.remove('check1');
+
+            dateTask.setAttribute('readonly', '')
+            dateTask.classList.remove('check1');
+
             btnEdit.removeAttribute('hidden', '');
             btnSave.setAttribute('hidden', '');
         } else {
             titleTask.removeAttribute('readonly', '');
             titleTask.classList.add('check1');
+
             descripTask.removeAttribute('readonly', '');
             descripTask.classList.add('check1');
+
+            dateTask.removeAttribute('readonly', '')
+            dateTask.classList.add('check1');
+
             btnEdit.setAttribute('hidden', '');
             btnSave.removeAttribute('hidden', '');
         }
@@ -304,19 +325,19 @@ class Todolist {
 
         let selecDate = new Date(newTask.querySelector('.newDate').value);
         let currD = new Date();
+
         if (selecDate < currD) {
+            newTask.classList.add('expired_task');
+            newTask.classList.remove('checked_task')
             this.sectionExpired.appendChild(newTask);
             delChecktBtn.remove();
             delUnchecktBtn.remove();
             delEditktBtn.remove();
             delSaveBtn.remove();
         }
-        else {
-            console.log('Completed')
-        }
     }
 
-    checkedTask(newTask) {
+    checkTask(newTask) {
         let checkTask = newTask.classList.contains('checked_task');
         let checkBtn = newTask.querySelector('.checked');
         let uncheckBtn = newTask.querySelector('.unchecked');
@@ -324,40 +345,20 @@ class Todolist {
         if (!checkTask) {
             checkBtn.setAttribute('hidden', 'hidden');
             uncheckBtn.removeAttribute('hidden', 'hidden');
+            newTask.classList.add('checked_task');
             newTask.parentNode.removeChild(newTask);
             this.sectionDone.appendChild(newTask);
-        }
-
-        if (checkTask) {
+        } else {
             checkBtn.removeAttribute('hidden', 'hidden');
             uncheckBtn.setAttribute('hidden', 'hidden');
+            newTask.classList.remove('checked_task');
             this.sectionDone.removeChild(newTask);
             this.sectionUndone.appendChild(newTask);
         }
         this.checkDate(newTask);
-        // this.localCheckedTask()
+
     }
 
-    // localCheckedTask(newTask) {
-    //     let checkTask = newTask.classList.contains('checked_task');
-    //     let checkBtn = newTask.querySelector('.checked');
-    //     let uncheckBtn = newTask.querySelector('.unchecked');
-
-    //     if (checkTask) {
-    //         checkBtn.setAttribute('hidden', 'hidden');
-    //         uncheckBtn.removeAttribute('hidden', 'hidden');
-    //         newTask.parentNode.removeChild(newTask);
-    //         this.sectionDone.appendChild(newTask);
-    //     } else {
-    //         checkBtn.removeAttribute('hidden', 'hidden');
-    //         uncheckBtn.setAttribute('hidden', 'hidden');
-    //         this.sectionDone.removeChild(newTask);
-    //         this.sectionUndone.appendChild(newTask);
-
-    //     }
-    //     newTask.classList.toggle('checked_task');
-    //     this.checkDate(newTask);
-    // }
 
     changeTabNotComplete() {
         this.sectionExpired.classList.remove('active');
