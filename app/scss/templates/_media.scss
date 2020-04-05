@@ -59,11 +59,12 @@
   }
   .section_remove.visibility,
   .section_add.visibility {
-    display: flex !important;
+    margin: unset;
+    display: flex;
   }
   .section_remove.unvisibility,
   .section_add.unvisibility {
-    display: none !important;
+    display: none;
   }
   .section_add__title {
     padding: 0 20px;
@@ -74,9 +75,10 @@
   }
   .section_add {
     display: none;
+    margin: unset;
   }
   .section_remove {
-    margin: 0;
+    margin: unset;
     padding: 5px;
   }
   .section_done,
@@ -102,19 +104,16 @@
 }
 
 @media (max-width: 575.98px) {
-
 }
 
 @media (max-width: 425px) {
   .section_add,
   .section_remove {
     padding: 5px;
-    margin: 5px;
   }
   .section_remove {
     flex: unset;
     width: 1000%;
-    margin: 0 5px;
   }
   .section_remove_button {
     flex-wrap: wrap;

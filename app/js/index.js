@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("todolist") === null) {
         console.log('LocalStorage is empty');
     } else {
-        todolist.createFromLocalNewItem();   
+        todolist.createFromLocalNewItem();
+
     }
 });
 
@@ -40,12 +41,13 @@ class Todolist {
 
         this.changeTabNotComplete();
         this.menu();
-        
+
     }
 
     createNewItem() {
         let newTask = document.createElement('div');
         newTask.className = "new__task";
+        newTask.dataset.status = '0';
 
         let check = document.createElement("button");
         check.className = "checked";
@@ -127,17 +129,20 @@ class Todolist {
 
             let newTask = document.createElement('div');
             newTask.className = "new__task";
+            newTask.dataset.status = objTodo.status;
+
+
 
             let check = document.createElement("button");
             check.className = "checked";
             check.innerHTML = '<i class="fas fa-check-double"></i>';
-            check.onclick = () => (this.checkTask(newTask), this.checkTaskFromLocal(newTask));
+            check.onclick = () => (this.checkTask(newTask));
 
             let uncheck = document.createElement('button');
             uncheck.className = "unchecked";
             uncheck.innerHTML = '<i class="fas fa-times"></i>';
             uncheck.setAttribute('hidden', 'hidden');
-            uncheck.onclick = () => (this.checkTask(newTask), this.checkTaskFromLocal(newTask));
+            uncheck.onclick = () => (this.checkTask(newTask));
 
             let edit = document.createElement("button");
             edit.className = "edit";
@@ -194,9 +199,24 @@ class Todolist {
             newTask.appendChild(taskTitleChecked);
             newTask.appendChild(taskDescription);
 
-            this.sectionUndone.appendChild(newTask);
+            switch (objTodo.status) {
+                case ("0"):
+                    this.sectionUndone.appendChild(newTask);
+                    console.log('0')
+                    break;
+                case ("1"):
+                    this.sectionDone.appendChild(newTask);
+                    console.log('1');
+                    break;
+                case ('2'):
+                    console.log('2');
+                    this.sectionExpired.appendChild(newTask);
+                    break;
+            }
         })
-        
+
+
+
     }
 
 
@@ -213,51 +233,43 @@ class Todolist {
         let valueTitle = titVal.value;
         let valueDescript = descVal.value;
         let valueDate = dateVal.value;
-        let objTodo = { valueTitle, valueDescript, valueDate};
+        let status = newTask.getAttribute('data-status', '');
+
+        let objTodo = { valueTitle, valueDescript, valueDate, status };
 
         let todoArray = localStorage.getItem('todolist') === null ? [] : JSON.parse(localStorage.getItem('todolist'));
         todoArray.push(objTodo);
         localStorage["todolist"] = JSON.stringify(todoArray);
     }
 
-    checkTaskFromLocal(newTask) {
-        let objTodoList = JSON.parse(localStorage.getItem('todolist'));
-        console.log(objTodoList);
-        let status = newTask.className;
-        console.log(status);
-        // let objTodo = { valueTitle, valueDescript, valueDate };
-        console.log('check from Local');
-        
-        for(let i in objTodoList){
-            if (!objTodoList.hasOwnProperty(i)) continue;
-        
-            var obj = objTodoList[i];
-            console.log(i);
-        
-            for (var prop in obj) {
-              // skip loop if the property is from prototype
-              if (!obj.hasOwnProperty(prop)) continue;
-        
-              // your code
-              console.log(prop + " = " + obj[prop]);
-            }
-          }
-          return false;
+    // checkTaskFromLocal(newTask) {
 
-        // switch (this.objTodo.status) {
-        //     case ("checked_task"):
-        //         this.sectionUndone.appendChild(newTask);
-        //         break;
-        //     case ("expired"):
-        //         this.sectionUndone.appendChild(newTask);
-        //         break;
-        // }
+    //     let objTodo = localStorage.getItem('todolist', 'status');
+    //     console.log(objTodo);
 
-        
-    }
+
+    // if (this.objTodo.status === '0') {
+    //     console.log('0');
+    //     this.sectionUndone.appendChild(newTask);
+
+    // } else if (this.objTodo.status === '1') {
+    //     console.log('1');
+    //     this.sectionUndone.removeChild(newTask);
+    //     this.sectionDone.appendChild(newTask);
+    //     this.sectionExpired.removeChild(newTask);
+    // } else if (this.objTodo.status === '2') {
+    //     console.log('2');
+    //     this.sectionUndone.removeChild(newTask);
+    //     this.sectionDone.removeChild(newTask);
+    //     this.sectionExpired.appendChild(newTask);
+    // }
+
+    // }
 
     addTask() {
+
         this.changeTabNotComplete();
+
         if (this.input.value && this.inputDescr.value && this.inputDate.value) {
             this.createNewItem();
             this.input.value = '';
@@ -327,8 +339,7 @@ class Todolist {
         let currD = new Date();
 
         if (selecDate < currD) {
-            newTask.classList.add('expired_task');
-            newTask.classList.remove('checked_task')
+            newTask.dataset.status = '2';
             this.sectionExpired.appendChild(newTask);
             delChecktBtn.remove();
             delUnchecktBtn.remove();
@@ -343,22 +354,46 @@ class Todolist {
         let uncheckBtn = newTask.querySelector('.unchecked');
 
         if (!checkTask) {
+            newTask.dataset.status = '1';
             checkBtn.setAttribute('hidden', 'hidden');
             uncheckBtn.removeAttribute('hidden', 'hidden');
-            newTask.classList.add('checked_task');
             newTask.parentNode.removeChild(newTask);
             this.sectionDone.appendChild(newTask);
         } else {
+            newTask.dataset.status = '0';
             checkBtn.removeAttribute('hidden', 'hidden');
             uncheckBtn.setAttribute('hidden', 'hidden');
-            newTask.classList.remove('checked_task');
             this.sectionDone.removeChild(newTask);
             this.sectionUndone.appendChild(newTask);
+            // localStorage.removeItem
         }
         this.checkDate(newTask);
 
+        this.rewritingLocalStorage(newTask);
+
     }
 
+    rewritingLocalStorage(newTask) {
+
+        let titVal = newTask.querySelector('.title_task');
+        let descVal = newTask.querySelector('.description_p');
+        let dateVal = newTask.querySelector('.newDate');
+
+        let valueTitle = titVal.value;
+        let valueDescript = descVal.value;
+        let valueDate = dateVal.value;
+        let status = newTask.getAttribute('data-status', '');
+
+        let objTodo = { valueTitle, valueDescript, valueDate, status };
+
+        let todoArray = localStorage.getItem('todolist') === null ? [] : JSON.parse(localStorage.getItem('todolist'));
+        todoArray.push(objTodo);
+        localStorage["todolist"] = JSON.stringify(todoArray);
+        
+        if(localStorage.hasOwnProperty('todolist')){
+        console.log(JSON.parse(localStorage.getItem('todolist')))}
+        console.log(localStorage.key(0));
+    }
 
     changeTabNotComplete() {
         this.sectionExpired.classList.remove('active');
@@ -404,20 +439,27 @@ class Todolist {
             this.btnExpired.classList.add('active');
         }
     }
+
     menu() {
         let addClass = this.sectionAdd.classList.contains('visibility');
 
         if (!addClass) {
+            // setTimeout( () => {
             this.sectionRemove.classList.add('unvisibility');
             this.sectionAdd.classList.add('visibility');
             this.btnMenuPlus.classList.add('visibility');
             this.btnMenuBars.classList.add('unvisibility');
+            // }, 400)
+
 
         } else {
+
+
             this.sectionRemove.classList.remove('unvisibility');
             this.sectionAdd.classList.remove('visibility');
-        }
 
+
+        }
         this.btnMenuPlus.classList.toggle('visibility');
         this.btnMenuPlus.classList.toggle('unvisibility');
         this.btnMenuBars.classList.toggle('visibility');
@@ -426,3 +468,17 @@ class Todolist {
 }
 
 let todolist = new Todolist();
+
+class Calendar {
+    constructor() {
+        this.days = [
+            "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"
+        ];
+        this.month = [
+            "Январь", "Ферваль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+        ];
+
+    }
+
+}
+let calendar = new Calendar();
