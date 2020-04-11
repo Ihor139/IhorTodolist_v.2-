@@ -112,6 +112,7 @@
     padding: 0 10px;
     font-family: "Raleway Bold", sans-serif;
     text-transform: uppercase;
+    text-align: center;
     border-radius: 20px;
     padding: 10px 20px;
     color: #000;
@@ -183,21 +184,19 @@
   display: flex;
   justify-content: space-around;
   color: white;
-  // margin: 10px 0;
   height: 100%;
-  overflow: hidden;
+  overflow-y: scroll;
+  background-color: hsla(0, 0%, 100%, 0.5);
+  border-radius: 20px;
 }
 .section_undone,
 .section_done,
 .section_expired {
   display: flex;
   flex-direction: column-reverse;
-  justify-content: flex-start;
-  overflow-y: scroll;
+  justify-content: flex-end;
   flex: 1 1;
   margin: 10px;
-  background-color: rgba($color: #fff, $alpha: 0.5);
-  border-radius: 20px;
   h2 {
     align-self: center;
   }
@@ -210,18 +209,17 @@
 }
 
 .section_done.active {
-  overflow-y: scroll;
   display: flex;
 }
 
 .section_undone.active {
   display: flex;
-  overflow-y: scroll;
 }
+
 .section_expired.active {
-  overflow-y: scroll;
   display: flex;
 }
+
 .task_title_cheked {
   display: flex;
   justify-content: space-between;
@@ -233,6 +231,7 @@
 .newDate {
   font-family: "Raleway Bold", sans-serif;
   text-transform: uppercase;
+  text-align: center;
   border-radius: 20px;
   padding: 7px 20px;
   background-color: rgba($color: #fff, $alpha: 0.9);

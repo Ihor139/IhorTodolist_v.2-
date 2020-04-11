@@ -4,6 +4,7 @@ const gulp 					= require('gulp'),
 	  plumber	 			= require('gulp-plumber'),
 	  jade	 				= require('gulp-jade'),
 	  cssnano 				= require('gulp-cssnano'),
+	//   babel 				= require('gulp-babel'),
 	  browserSync 			= require('browser-sync'),
 	  cache 				= require('gulp-cache'),
 	  concat 				= require('gulp-concat'),
@@ -11,6 +12,7 @@ const gulp 					= require('gulp'),
 	  notify 				= require('gulp-notify'),
 	  clean 				= require('gulp-clean'),
 	  unglify 				= require('gulp-uglify');
+	  
 
 
 // Call compilation of sass to css
@@ -36,6 +38,13 @@ gulp.task('jade', async function(){
 			.pipe(browserSync.reload({stream: true}));
 });
 
+// gulp.task('babel', () =>
+//     gulp.src('app/js/*.js')
+//         .pipe(babel({
+//             presets: ['@babel/env']
+//         }))
+//         .pipe(gulp.dest('app/dist/js'))
+// );
 
 // Css libs compilation to libs.min.css in app/css
 gulp.task('css-libs', async function () {
@@ -81,7 +90,7 @@ gulp.task('watch', function(){
 	gulp.watch('app/libs/**/*.css', gulp.series('css-libs'));
 	gulp.watch('app/libs/**/*.js', gulp.series('js-libs'));
 	gulp.watch('app/css/**/*.css');
-	gulp.watch('app/js/*.js');
+	gulp.watch('app/js/**/*.js');
 	gulp.watch('app/*.html');
 });
 
@@ -123,4 +132,4 @@ gulp.task('clear', function(callback) {
 	return cache.clearAll();
 });
 
-gulp.task('default', gulp.series('browser-sync', 'sass',  'jade',  'css-libs', 'js-libs', 'watch'));
+gulp.task('default', gulp.series('browser-sync', 'sass',  'jade', /*'babel',*/ 'css-libs', 'js-libs', 'watch'));
