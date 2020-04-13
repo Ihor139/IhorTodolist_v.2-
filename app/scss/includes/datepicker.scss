@@ -19,7 +19,7 @@ $font-size: $width * .056;
   z-index: 9001;
   user-select: none;
   border: 1px solid gray;
-  border-radius: $radius;
+  border-radius: 15px;
   overflow: hidden;
   background: white;
   box-shadow: 0 ($width * .08) ($width * .08) ($width * -.06) rgba(0,0,0,.3);
@@ -131,7 +131,7 @@ $font-size: $width * .056;
     align-items: center;
     flex-grow: 1;
     flex-shrink: 0;
-    background: lightgray;
+    background-color: rgba(242,243,245, 1);
     filter: blur(0px);
     transition: filter $transition;
 
@@ -150,14 +150,14 @@ $font-size: $width * .056;
 
     &:hover {
       &.qs-left:after {
-        border-right-color: black;
+        border-right-color: white;
       }
 
       &.qs-right:after {
-        border-left-color: black;
+        border-left-color: white;
       }
 
-      background: rgba(0,0,0,.1);
+      background-color: #4a2869;
     }
 
     &:after {
@@ -211,7 +211,7 @@ $font-size: $width * .056;
     padding: $width * .02;
     filter: blur(0px);
     transition: filter $transition;
-    background-color: hsla(0, 0%, 72%, 0.9);
+    background-color: rgba(242, 243, 245, 1);
 
     &.qs-blur {
       filter: blur(5px);
@@ -294,7 +294,8 @@ $font-size: $width * .056;
 
     &:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active) {
       &:hover {
-        background: orange;
+        background-color: #4a2869;
+        color: white;
       }
     }
   }

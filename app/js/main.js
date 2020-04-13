@@ -36,10 +36,32 @@ class Todolist {
         this.sectionDone = document.querySelector('.section_done');
         this.sectionExpired = document.querySelector('.section_expired');
 
+        let count = 0;
+
+        if (localStorage.getItem('todolist')) {
+            let locLength = JSON.parse(localStorage.getItem('todolist'));
+            count = locLength.length
+        } else {
+            count = 0
+        }
+
         this.btnAdd.addEventListener('click', () => {
+
+            // if(this.input.value == '' && this.inputDescr.value == '' && this.inputDate.value == ''){
+            //     console.log('empty')
+            //     this.input.classList.add('empty');
+            //     this.inputDescr.classList.add('empty');
+            //     this.inputDate.classList.add('empty');
+            // }
+
             if (this.input.value && this.inputDescr.value && this.inputDate.value) {
                 count++;
                 this.createNewItem(count);
+            } else{
+                this.input.classList.add('empty');
+                this.inputDescr.classList.add('empty');
+                this.inputDate.classList.add('empty');
+
             }
         })
 
@@ -54,8 +76,6 @@ class Todolist {
         this.changeTabNotComplete();
         this.menu();
 
-        this.index = 0;
-        let count = 0;
     }
 
     createNewItem(count) {
@@ -70,13 +90,15 @@ class Todolist {
             let check = document.createElement("button");
             check.className = "checked";
             check.innerHTML = '<i class="fas fa-check-double"></i>';
-            check.onclick = () => this.checkTask(newTask);
+            check.onclick = () => { this.checkTaskFromUndone(newTask) };
 
             let uncheck = document.createElement('button');
             uncheck.className = "unchecked";
             uncheck.innerHTML = '<i class="fas fa-times"></i>';
             uncheck.setAttribute('hidden', 'hidden');
-            uncheck.onclick = () => this.checkTask(newTask);
+            uncheck.addEventListener('click', () => {
+                this.checkTaskFromDone(newTask)
+            });
 
             let edit = document.createElement("button");
             edit.className = "edit";
@@ -112,7 +134,6 @@ class Todolist {
             newDate.setAttribute('readonly', '');
             newDate.className = 'newDate';
             newDate.value = (this.inputDate).value;
-            console.log((this.inputDate).value);
 
             let taskTitleChecked = document.createElement('div');
             taskTitleChecked.className = "task_title_cheked";
@@ -138,15 +159,18 @@ class Todolist {
 
             this.input.value = '';
             this.inputDescr.value = '';
-            this.inputDate.value = 'Choose date';
+            this.inputDate.value = '';
             this.input.classList.remove('empty');
             this.inputDescr.classList.remove('empty');
             this.inputDate.classList.remove('empty');
-        } else {
-            this.input.classList.add('empty');
-            this.inputDescr.classList.add('empty');
-            this.inputDate.classList.add('empty');
         }
+
+        // if(this.input.value == '' && this.inputDescr.value == '' && this.inputDate.value == ''){
+        //     console.log('empty')
+        //     this.input.classList.add('empty');
+        //     this.inputDescr.classList.add('empty');
+        //     this.inputDate.classList.add('empty');
+        // }
     }
 
     createFromLocalNewItem() {
@@ -163,13 +187,15 @@ class Todolist {
             let check = document.createElement("button");
             check.className = "checked";
             check.innerHTML = '<i class="fas fa-check-double"></i>';
-            check.onclick = () => (this.checkTask(newTask));
+            check.onclick = () => { this.checkTaskFromUndone(newTask) };
 
             let uncheck = document.createElement('button');
             uncheck.className = "unchecked";
             uncheck.innerHTML = '<i class="fas fa-times"></i>';
             uncheck.setAttribute('hidden', 'hidden');
-            uncheck.onclick = () => (this.checkTask(newTask));
+            uncheck.addEventListener('click', () => {
+                this.checkTaskFromDone(newTask)
+            });
 
             let edit = document.createElement("button");
             edit.className = "edit";
@@ -225,14 +251,15 @@ class Todolist {
             newTask.appendChild(taskDescription);
 
             if (objTodo.status == '0') {
-                console.log(objTodo.status);
                 this.sectionUndone.appendChild(newTask);
             } else if (objTodo.status == '1') {
-                console.log('1');
                 this.sectionDone.appendChild(newTask);
+                check.setAttribute('hidden', 'hidden');
+                uncheck.removeAttribute('hidden', 'hidden');
             } else if (objTodo.status == '2') {
-                console.log('2');
                 this.sectionExpired.appendChild(newTask);
+                check.remove();
+                edit.remove();
             }
         })
 
@@ -261,46 +288,24 @@ class Todolist {
         localStorage["todolist"] = JSON.stringify(todoArray);
     }
 
-    checkTaskFromLocal(newTask) {
-
-        if (this.objTodo.status === '0') {
-            console.log(this.objTodo.status);
-            this.sectionUndone.appendChild(newTask);
-        } else if (this.objTodo.status === '1') {
-            console.log('1');
-            this.sectionDone.appendChild(newTask);
-        } else if (this.objTodo.status === '2') {
-            console.log('2');
-            this.sectionExpired.appendChild(newTask);
-        }
-
-    }
-
-    addTask(count) {
-
-        this.changeTabNotComplete();
-
-        if (this.input.value && this.inputDescr.value && this.inputDate.value) {
-
-            this.createNewItem(count);
-
-            this.input.value = '';
-            this.inputDescr.value = '';
-            this.inputDate.value = 'Choose date';
-            this.input.classList.remove('empty');
-            this.inputDescr.classList.remove('empty')
-            this.inputDate.classList.remove('empty')
-        } else {
-            this.input.classList.add('empty');
-            this.inputDescr.classList.add('empty')
-            this.inputDate.classList.add('empty')
-        }
-
-    }
-
     removeTask(newTask) {
         let thisTask = newTask.parentNode;
         thisTask.removeChild(newTask);
+
+        // let target = event.target;
+        // let parent1 = target.parentElement;
+        // let parent2 = parent1.parentElement
+        // let parent3 = parent2.parentNode;
+        // let parent4 = parent3.parentNode;
+
+        // let currentList = JSON.parse(localStorage.getItem('todolist'))
+        // currentList.forEach(objTodo => {
+        //     if (objTodo.id === parent4.dataset.id) {
+                
+        //     }
+        // })
+        // localStorage.setItem('todolist', JSON.stringify(currentList));
+
     }
 
     editTask(newTask) {
@@ -354,13 +359,9 @@ class Todolist {
 
             let target = event.target;
             let parent1 = target.parentElement;
-            console.log(parent1);
             let parent2 = parent1.parentElement
-            console.log(parent2);
             let parent3 = parent2.parentNode;
-            console.log(parent3);
             let parent4 = parent3.parentNode;
-            console.log(parent4);
 
             let currentList = JSON.parse(localStorage.getItem('todolist'))
             currentList.forEach(objTodo => {
@@ -379,48 +380,58 @@ class Todolist {
         }
     }
 
-    checkTask(newTask) {
-        let checkTask = newTask.classList.contains('checked_task');
+    checkTaskFromUndone(newTask) {
         let checkBtn = newTask.querySelector('.checked');
         let uncheckBtn = newTask.querySelector('.unchecked');
 
-        if (!checkTask) {
-            newTask.dataset.status = '1';
-            checkBtn.setAttribute('hidden', 'hidden');
-            uncheckBtn.removeAttribute('hidden', 'hidden');
-            newTask.parentNode.removeChild(newTask);
-            this.sectionDone.appendChild(newTask);
+        checkBtn.setAttribute('hidden', 'hidden');
+        uncheckBtn.removeAttribute('hidden', 'hidden');
+        this.sectionUndone.removeChild(newTask);
+        this.sectionDone.appendChild(newTask);
 
-            let target = event.target;
-            let parent1 = target.parentElement;
-            console.log(parent1);
-            let parent2 = parent1.parentElement
-            console.log(parent2);
-            let parent3 = parent2.parentNode;
-            console.log(parent3);
-            let parent4 = parent3.parentNode;
-            console.log(parent4);
+        let target = event.target;
+        let parent1 = target.parentElement;
+        let parent2 = parent1.parentElement
+        let parent3 = parent2.parentNode;
+        let parent4 = parent3.parentNode;
 
-            let currentList = JSON.parse(localStorage.getItem('todolist'))
-            currentList.forEach(objTodo => {
-                // console.log(objTodo.id)
-                // console.log(parent4.dataset.status)
-                if (objTodo.id === parent4.dataset.id) {
-                    objTodo.status = 1;
-                }
-            })
-            localStorage.setItem('todolist', JSON.stringify(currentList));
+        let currentList = JSON.parse(localStorage.getItem('todolist'))
+        currentList.forEach(objTodo => {
+            if (objTodo.id === parent4.dataset.id) {
+                objTodo.status = 1;
+            }
+        })
+        localStorage.setItem('todolist', JSON.stringify(currentList));
 
-        } else {
-            newTask.dataset.status = '0';
-            checkBtn.removeAttribute('hidden', 'hidden');
-            uncheckBtn.setAttribute('hidden', 'hidden');
-            this.sectionDone.removeChild(newTask);
-            this.sectionUndone.appendChild(newTask);
-        }
         this.checkDate(newTask);
+    }
 
+    checkTaskFromDone(newTask) {
 
+        let checkBtn = newTask.querySelector('.checked');
+        let uncheckBtn = newTask.querySelector('.unchecked');
+
+        this.sectionDone.removeChild(newTask);
+        this.sectionUndone.appendChild(newTask);
+        checkBtn.removeAttribute('hidden', 'hidden');
+        uncheckBtn.setAttribute('hidden', 'hidden');
+
+        let target = event.target;
+        let parent1 = target.parentElement;
+        let parent2 = parent1.parentElement
+        let parent3 = parent2.parentNode;
+        let parent4 = parent3.parentNode;
+
+        let currentList = JSON.parse(localStorage.getItem('todolist'))
+        currentList.forEach(objTodo => {
+            console.log('else')
+            if (objTodo.id === parent4.dataset.id) {
+                objTodo.status = 0;
+            }
+        })
+        localStorage.setItem('todolist', JSON.stringify(currentList));
+
+        this.checkDate(newTask);
     }
 
     changeTabNotComplete() {
@@ -479,15 +490,13 @@ class Todolist {
             this.btnMenuBars.classList.add('unvisibility');
             // }, 400)
 
-
         } else {
-
 
             this.sectionRemove.classList.remove('unvisibility');
             this.sectionAdd.classList.remove('visibility');
 
-
         }
+
         this.btnMenuPlus.classList.toggle('visibility');
         this.btnMenuPlus.classList.toggle('unvisibility');
         this.btnMenuBars.classList.toggle('visibility');
