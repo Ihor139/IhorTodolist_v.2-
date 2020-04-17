@@ -42,17 +42,10 @@ class Todolist {
             let locLength = JSON.parse(localStorage.getItem('todolist'));
             count = locLength.length
         } else {
-            count = 0
+            count = 0;
         }
 
         this.btnAdd.addEventListener('click', () => {
-
-            // if(this.input.value == '' && this.inputDescr.value == '' && this.inputDate.value == ''){
-            //     console.log('empty')
-            //     this.input.classList.add('empty');
-            //     this.inputDescr.classList.add('empty');
-            //     this.inputDate.classList.add('empty');
-            // }
 
             if (this.input.value && this.inputDescr.value && this.inputDate.value) {
                 count++;
@@ -163,15 +156,11 @@ class Todolist {
             this.input.classList.remove('empty');
             this.inputDescr.classList.remove('empty');
             this.inputDate.classList.remove('empty');
-        }
 
-        // if(this.input.value == '' && this.inputDescr.value == '' && this.inputDate.value == ''){
-        //     console.log('empty')
-        //     this.input.classList.add('empty');
-        //     this.inputDescr.classList.add('empty');
-        //     this.inputDate.classList.add('empty');
-        // }
-    }
+
+            this.changeTabNotComplete();
+        }
+     }
 
     createFromLocalNewItem() {
 
@@ -261,6 +250,10 @@ class Todolist {
                 check.remove();
                 edit.remove();
             }
+            else if (objTodo.status == '3') {
+                newTask.setAttribute('visibility', 'unvisibility')
+                newTask.remove();
+            }
         })
 
     }
@@ -289,22 +282,26 @@ class Todolist {
     }
 
     removeTask(newTask) {
+
+    //     let target = event.target;
+    //     let parent1 = target.parentElement;
+    //     let parent2 = parent1.parentElement
+    //     let parent3 = parent2.parentNode;
+    //     let parent4 = parent3.parentNode;
+    //     let currentList = JSON.parse(localStorage.getItem('todolist'));
+        
+    //     currentList.forEach(objTodo => {
+    //     if (objTodo.id === parent4.dataset.id) {
+    //         objTodo.status = 3;
+    //     console.log('remove');
+    //     }
+    //     return
+    // })
+
+    //     localStorage.setItem('todolist', JSON.stringify(currentList));
+
         let thisTask = newTask.parentNode;
         thisTask.removeChild(newTask);
-
-        // let target = event.target;
-        // let parent1 = target.parentElement;
-        // let parent2 = parent1.parentElement
-        // let parent3 = parent2.parentNode;
-        // let parent4 = parent3.parentNode;
-
-        // let currentList = JSON.parse(localStorage.getItem('todolist'))
-        // currentList.forEach(objTodo => {
-        //     if (objTodo.id === parent4.dataset.id) {
-                
-        //     }
-        // })
-        // localStorage.setItem('todolist', JSON.stringify(currentList));
 
     }
 
@@ -317,6 +314,24 @@ class Todolist {
         let btnSave = newTask.querySelector('.save');
 
         if (classChange) {
+
+            let target = event.target;
+            let parent1 = target.parentElement;
+            let parent2 = parent1.parentElement
+            let parent3 = parent2.parentNode;
+            let parent4 = parent3.parentNode;
+    
+            let currentList = JSON.parse(localStorage.getItem('todolist'))
+            currentList.forEach(objTodo => {
+                if (objTodo.id === parent4.dataset.id) {
+                    objTodo.valueTitle = titleTask.value;
+                    objTodo.valueDescript = descripTask.value;
+                    objTodo.valueDate = dateTask.value;
+                }
+            })
+            localStorage.setItem('todolist', JSON.stringify(currentList));
+    
+
             titleTask.setAttribute('readonly', '');
             titleTask.classList.remove('check1');
 
@@ -483,12 +498,10 @@ class Todolist {
         let addClass = this.sectionAdd.classList.contains('visibility');
 
         if (!addClass) {
-            // setTimeout( () => {
             this.sectionRemove.classList.add('unvisibility');
             this.sectionAdd.classList.add('visibility');
             this.btnMenuPlus.classList.add('visibility');
             this.btnMenuBars.classList.add('unvisibility');
-            // }, 400)
 
         } else {
 
