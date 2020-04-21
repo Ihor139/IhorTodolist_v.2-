@@ -282,22 +282,22 @@ class Todolist {
 
     removeTask(newTask) {
 
-    //     let target = event.target;
-    //     let parent1 = target.parentElement;
-    //     let parent2 = parent1.parentElement
-    //     let parent3 = parent2.parentNode;
-    //     let parent4 = parent3.parentNode;
-    //     let currentList = JSON.parse(localStorage.getItem('todolist'));
+        let target = event.target;
+        let parent1 = target.parentElement;
+        let parent2 = parent1.parentElement
+        let parent3 = parent2.parentNode;
+        let parent4 = parent3.parentNode;
+        let currentList = JSON.parse(localStorage.getItem('todolist'));
         
-    //     currentList.forEach(objTodo => {
-    //     if (objTodo.id === parent4.dataset.id) {
-    //         objTodo.status = 3;
-    //     console.log('remove');
-    //     }
-    //     return
-    // })
+        currentList.forEach(objTodo => {
+        if (objTodo.id === parent4.dataset.id) {
+            objTodo.status = 3;
+        console.log('remove');
+        }
+        return
+    })
 
-    //     localStorage.setItem('todolist', JSON.stringify(currentList));
+        localStorage.setItem('todolist', JSON.stringify(currentList));
 
         let thisTask = newTask.parentNode;
         thisTask.removeChild(newTask);
